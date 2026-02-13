@@ -17,10 +17,6 @@ public class EmployeeService {
 
     // CREATE
     public Employee create(Employee employee) {
-        if (employee == null) {
-            throw new RuntimeException("Request body is missing");
-        }
-        employee.setId(null);
         return repo.save(employee);
     }
 
@@ -35,14 +31,15 @@ public class EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
-    // UPDATE (contact will NOT be updated)
+    // UPDATE (full update)
     public Employee update(Long id, Employee updated) {
         Employee existing = getById(id);
 
         existing.setName(updated.getName());
         existing.setEmail(updated.getEmail());
         existing.setDepartment(updated.getDepartment());
-        // existing.setContact(updated.getContact()); // keep contact fixed
+        existing.setContact(updated.getContact());
+        existing.setSalary(updated.getSalary());
 
         return repo.save(existing);
     }
@@ -50,5 +47,30 @@ public class EmployeeService {
     // DELETE
     public void delete(Long id) {
         repo.deleteById(id);
+    }
+
+    // Increment salary for one employee
+    public Employee incrementSalary(Long id, int amount) {
+        Employee emp = getById(id);
+
+        Integer current = emp.getSalary();
+        if (current == null) current = 0;
+
+        emp.setSalary(current + amount);
+        return repo.save(emp);
+    }
+
+    // Increment salary for ALL employees
+    public List<Employee> incrementSalaryForAll(int amount) {
+        List<Employee> employees = repo.findAll();
+
+        for (Employee emp : employees) {
+            Integer current = emp.getSalary();
+            if (current == null) current = 0;
+
+            emp.setSalary(current + amount);
+        }
+
+        return repo.saveAll(employees);
     }
 }

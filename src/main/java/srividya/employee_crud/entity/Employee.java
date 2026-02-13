@@ -1,12 +1,9 @@
-
 package srividya.employee_crud.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -14,22 +11,68 @@ public class Employee {
     private Long id;
 
     private String name;
+
     private String email;
+
     private String department;
+
     private String contact;
 
-    public Employee() {}
+    private Integer salary=0;
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getDepartment() { return department; }
-    public String getContact(){ return contact;}
-    //address added datatype change
+    // Default Constructor (REQUIRED by JPA)
+    public Employee() {
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setDepartment(String department) { this.department = department; }
-    public void setContact(String contact) { this.contact = contact; }
+    // ===== GETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    // ===== SETTERS =====
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
 }
