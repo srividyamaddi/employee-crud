@@ -38,14 +38,29 @@ public class EmployeeController {
 
     // UPDATE
     @PutMapping("/{id}")
-    public Employee update(@PathVariable Long id, @RequestBody Employee employee) {
+    public Employee update(@PathVariable Long id,
+                           @RequestBody Employee employee) {
         return service.update(id, employee);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         service.delete(id);
+    }
+
+    // INCREMENT SALARY FOR ONE EMPLOYEE
+    @PutMapping("/{id}/increment")
+    public Employee incrementSalary(
+            @PathVariable Long id,
+            @RequestParam int amount) {
+        return service.incrementSalary(id, amount);
+    }
+
+    // INCREMENT SALARY FOR ALL EMPLOYEES
+    @PutMapping("/increment-all")
+    public List<Employee> incrementSalaryForAll(
+            @RequestParam int amount) {
+        return service.incrementSalaryForAll(amount);
     }
 }
